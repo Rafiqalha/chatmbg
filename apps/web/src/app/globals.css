@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@import "tailwindcss";
+
+/*
+ * MBGBrain Design System — Tailwind v4 Theme
+ * Tema: "Hijau Gizi" — modern, organik, terpercaya
+ */
+@theme {
+  /* ── Colors: Primary — Hijau Organik (bayam/pandan) ── */
+  --color-primary-50:  #f0faf4;
+  --color-primary-100: #d8f3e3;
+  --color-primary-200: #b4e6c8;
+  --color-primary-300: #82d1a6;
+  --color-primary-400: #4bb87e;
+  --color-primary-500: #2a9d5c;
+  --color-primary-600: #1e7d47;
+  --color-primary-700: #196339;
+  --color-primary-800: #154f2e;
+  --color-primary-900: #0f3a21;
+
+  /* ── Colors: Accent — Kunyit / Amber hangat ── */
+  --color-accent-50:  #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #f59e0b;
+  --color-accent-500: #d97706;
+  --color-accent-600: #b45309;
+  --color-accent-700: #92400e;
+  --color-accent-800: #78350f;
+  --color-accent-900: #451a03;
+
+  /* ── Colors: Neutral — Beras / Krem ── */
+  --color-neutral-50:  #fafaf8;
+  --color-neutral-100: #f5f4f0;
+  --color-neutral-200: #e9e7e0;
+  --color-neutral-300: #d4d1c7;
+  --color-neutral-400: #b5b2a5;
+  --color-neutral-500: #8f8c82;
+  --color-neutral-600: #6b6860;
+  --color-neutral-700: #524f48;
+  --color-neutral-800: #3d3b35;
+  --color-neutral-900: #27251f;
+
+  /* ── Colors: Semantic ── */
+  --color-danger:  #dc2626;
+  --color-warning: #f59e0b;
+  --color-success: #2a9d5c;
+  --color-info:    #3b82f6;
+
+  /* ── Typography ── */
+  --font-display: "Plus Jakarta Sans", "Noto Sans", sans-serif;
+  --font-body:    "DM Sans", "Noto Sans", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "Fira Code", monospace;
+
+  /* ── Border Radius ── */
+  --radius-xl:  12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+
+  /* ── Animations ── */
+  --animate-fade-in:    fadeIn 0.3s ease-out;
+  --animate-slide-up:   slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-in:   slideIn 0.3s ease-out;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-typing:     typing 1.4s steps(3, end) infinite;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { transform: translateY(12px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  @keyframes slideIn {
+    from { transform: translateX(-8px); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+  }
+  @keyframes typing {
+    0%, 100% { opacity: 1;   }
+    50%      { opacity: 0.3; }
+  }
+}
+
+/* ── CSS Custom Properties for light/dark mode ── */
+:root {
+  --background: 250 250 248;
+  --foreground: 39 37 31;
+  --surface:    245 244 240;
+  --border:     212 209 199;
+  --primary:    42 157 92;
+  --accent:     245 158 11;
+  --radius:     12px;
+}
+
+.dark {
+  --background: 22 21 18;
+  --foreground: 250 249 246;
+  --surface:    33 31 27;
+  --border:     61 59 53;
+}
+
+/* ── Base Styles ── */
+* {
+  border-color: var(--color-neutral-200);
+}
+
+.dark * {
+  border-color: var(--color-neutral-700);
+}
+
+body {
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+.dark body {
+  background-color: #161512;
+  color: var(--color-neutral-50);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* ── Scrollbar Custom ── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-neutral-300); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-400); }
+
+.dark ::-webkit-scrollbar-thumb { background: var(--color-neutral-600); }
+.dark ::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-500); }
+
+/* ── Utility Classes ── */
+.glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(250, 250, 248, 0.85);
+}
+.dark .glass {
+  background: rgba(22, 21, 18, 0.85);
+}
+
+.text-balance { text-wrap: balance; }
+
+/* ── Markdown Prose Styling ── */
+.prose-mbg h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; }
+.prose-mbg h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 1.25rem; }
+.prose-mbg h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 1rem; }
+.prose-mbg p  { margin-bottom: 0.75rem; line-height: 1.7; }
+.prose-mbg ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+.prose-mbg ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+.prose-mbg li { margin-bottom: 0.25rem; line-height: 1.6; }
+.prose-mbg code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-neutral-100);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+.dark .prose-mbg code {
+  background: var(--color-neutral-800);
+}
+.prose-mbg pre {
+  background: var(--color-neutral-900);
+  color: var(--color-neutral-100);
+  padding: 1rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.prose-mbg pre code {
+  background: transparent;
+  padding: 0;
+}
+.prose-mbg blockquote {
+  border-left: 3px solid var(--color-primary-500);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--color-neutral-600);
+  font-style: italic;
+}
+.prose-mbg table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.prose-mbg th,
+.prose-mbg td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-neutral-200);
+  text-align: left;
+}
+.dark .prose-mbg th,
+.dark .prose-mbg td {
+  border-color: var(--color-neutral-700);
+}
+.prose-mbg th {
+  background: var(--color-neutral-100);
+  font-weight: 600;
+}
+.dark .prose-mbg th {
+  background: var(--color-neutral-800);
+}
