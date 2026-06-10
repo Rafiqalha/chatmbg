@@ -53,9 +53,9 @@ export const colors = {
 
 export const typography = {
   // Display: Karakter kuat, modern Indonesia
-  fontDisplay: '"Plus Jakarta Sans", "Noto Sans", sans-serif',
+  fontDisplay: '"Nunito", system-ui, sans-serif',
   // Body: Readable, bersih
-  fontBody: '"DM Sans", "Noto Sans", system-ui, sans-serif',
+  fontBody: '"Nunito", system-ui, sans-serif',
   // Mono: Untuk kode dan data
   fontMono: '"JetBrains Mono", "Fira Code", monospace',
 } as const;

@@ -37,7 +37,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen antialiased" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryProvider>
             {children}
@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   color: 'rgb(var(--foreground))',
                   border: '1px solid rgb(var(--border))',
                   borderRadius: '12px',
-                  fontFamily: '"DM Sans", sans-serif',
+                  fontFamily: '"Nunito", sans-serif',
                 },
               }}
             />

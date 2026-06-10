@@ -111,12 +111,12 @@ export function LandingPage() {
 
       <header className="sticky top-0 z-40 border-b border-neutral-200/60 bg-neutral-50/80 backdrop-blur-xl dark:border-neutral-800/60 dark:bg-neutral-950/80">
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
+          initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6"
         >
           <Link href="/">
-            <ChatMBGLogo size={40} />
+            <ChatMBGLogo size={80} showText={true} />
           </Link>
           <nav className="hidden items-center gap-6 text-sm font-medium text-neutral-600 md:flex dark:text-neutral-400">
             <a href="#modul" className="hover:text-primary-600">
@@ -148,7 +148,7 @@ export function LandingPage() {
             transition={{ duration: 0.5 }}
             className="mb-8 flex justify-center"
           >
-            <ChatMBGLogo size={72} showText={false} />
+            <ChatMBGLogo size={300} showText={false} />
           </motion.div>
 
           <motion.div
@@ -241,7 +241,7 @@ export function LandingPage() {
           viewport={{ once: true }}
           className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-primary-200/50 bg-gradient-to-br from-primary-500 to-primary-700 p-10 text-center text-white shadow-2xl shadow-primary-500/25"
         >
-          <ChatMBGLogo size={56} showText={false} className="mx-auto justify-center" />
+          <ChatMBGLogo size={96} showText={false} className="mx-auto justify-center" />
           <h2 className="font-display mt-6 text-2xl font-bold sm:text-3xl">
             Mulai dengan ChatMBG hari ini
           </h2>
@@ -263,7 +263,7 @@ export function LandingPage() {
 
       <footer className="border-t border-neutral-200/80 px-4 py-10 dark:border-neutral-800">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <ChatMBGLogo size={32} />
+          <ChatMBGLogo size={48} showText={false} />
           <p className="text-xs text-neutral-500">© 2026 ChatMBG · Program Makan Bergizi Gratis Indonesia</p>
         </div>
       </footer>

@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChefHat, CheckCircle2, XCircle, AlertTriangle, Download, RefreshCw } from 'lucide-react';
+import { ChefHat, CheckCircle2, XCircle, AlertTriangle, Download, RefreshCw, School, BookOpen, Baby, HeartHandshake, type LucideIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 import { DEMO_VALIDATION_RESULT } from '@/lib/mock/demo-data';
+import { apiJson } from '@/lib/api';
 
 type RecipientGroup = 'sd' | 'smp' | 'balita' | 'bumil';
 type ComplianceStatus = 'memenuhi' | 'kurang' | 'tidak_memenuhi';
@@ -27,11 +28,11 @@ interface ValidationResult {
   regulation: string;
 }
 
-const RECIPIENT_GROUPS: { value: RecipientGroup; label: string; emoji: string }[] = [
-  { value: 'sd', label: 'Siswa SD', emoji: '🏫' },
-  { value: 'smp', label: 'Siswa SMP', emoji: '📚' },
-  { value: 'balita', label: 'Balita (2–5 th)', emoji: '👶' },
-  { value: 'bumil', label: 'Ibu Hamil/Menyusui', emoji: '🤱' },
+const RECIPIENT_GROUPS: { value: RecipientGroup; label: string; icon: LucideIcon }[] = [
+  { value: 'sd', label: 'Siswa SD', icon: School },
+  { value: 'smp', label: 'Siswa SMP', icon: BookOpen },
+  { value: 'balita', label: 'Balita (2–5 th)', icon: Baby },
+  { value: 'bumil', label: 'Ibu Hamil/Menyusui', icon: HeartHandshake },
 ];
 
 const STATUS_CONFIG = {
@@ -115,13 +116,10 @@ export function MenuValidator() {
     if (!menuInput.trim()) return;
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/validate-menu`, {
+      const data = await apiJson<ValidationResult>('/api/v1/validate-menu', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ menu: menuInput, recipient_group: recipient }),
       });
-      if (!res.ok) throw new Error('API unavailable');
-      const data = await res.json();
       setResult(data);
     } catch {
       await new Promise((r) => setTimeout(r, 800));
@@ -166,7 +164,7 @@ export function MenuValidator() {
                   : 'border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:border-neutral-600'
               )}
             >
-              <span className="text-xl">{g.emoji}</span>
+              <g.icon className="h-6 w-6 text-primary-500 shrink-0" />
               <span className="text-center text-xs font-medium leading-tight">{g.label}</span>
             </button>
           ))}

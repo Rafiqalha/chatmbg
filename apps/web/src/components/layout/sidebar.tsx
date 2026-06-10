@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,10 +17,14 @@ import {
   Moon,
   Sun,
   Menu,
+  User,
+  LogOut,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import { ChatMBGLogo } from '@/components/brand/chatmbg-logo';
+import { createClient } from '@/lib/supabase/client';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 const NAV_ITEMS = [
   {
@@ -55,6 +59,16 @@ function SidebarContent({
 }) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+    });
+  }, []);
 
   return (
     <>
@@ -150,6 +164,29 @@ function SidebarContent({
         </nav>
 
         <div className="space-y-1 border-t border-neutral-200 p-3 dark:border-neutral-800">
+          {user && (
+            <div
+              className={cn(
+                'flex w-full items-center gap-2.5 rounded-xl px-2 py-2 text-sm',
+                collapsed && 'mx-auto w-10 justify-center px-0'
+              )}
+            >
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300">
+                <User className="h-4 w-4" />
+              </div>
+              {!collapsed && (
+                <div className="flex flex-1 flex-col overflow-hidden">
+                  <span className="truncate text-[13px] font-semibold leading-tight text-neutral-800 dark:text-neutral-200">
+                    {user.email?.split('@')[0] || 'User'}
+                  </span>
+                  <span className="truncate text-[10px] text-neutral-500">
+                    {user.email}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
           <button
             type="button"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -159,8 +196,8 @@ function SidebarContent({
               collapsed && 'mx-auto w-10 justify-center px-0'
             )}
           >
-            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            {!collapsed && <span>Tampilan {theme === 'dark' ? 'Terang' : 'Gelap'}</span>}
+            {mounted && theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {!collapsed && <span>Tampilan {mounted && theme === 'dark' ? 'Terang' : 'Gelap'}</span>}
           </button>
 
           <Link

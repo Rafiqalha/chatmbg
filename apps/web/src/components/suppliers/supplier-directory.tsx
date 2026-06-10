@@ -1,24 +1,88 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Store, MapPin, Users, Search, Star, BadgeCheck, Filter } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 import { DEMO_SUPPLIERS } from '@/lib/mock/demo-data';
+import { apiFetch } from '@/lib/api';
+
+type SupplierRow = {
+  id: string;
+  name: string;
+  category: string;
+  distanceKm: number;
+  capacity: number;
+  verified: boolean;
+  completeness: number;
+};
+
+function normalizeDemo(): SupplierRow[] {
+  return DEMO_SUPPLIERS.map((s) => ({
+    id: s.id,
+    name: s.name,
+    category: s.category,
+    distanceKm: s.distanceKm,
+    capacity: s.capacity,
+    verified: s.verified,
+    completeness: s.completeness,
+  }));
+}
 
 export function SupplierDirectory() {
   const [query, setQuery] = useState('');
   const [radius, setRadius] = useState(20);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [suppliers, setSuppliers] = useState<SupplierRow[]>(normalizeDemo());
+  const [isDemo, setIsDemo] = useState(true);
+
+  useEffect(() => {
+    const params = new URLSearchParams({
+      radius_km: String(radius),
+      verified_only: String(verifiedOnly),
+    });
+    if (query) params.set('q', query);
+
+    apiFetch(`/api/v1/suppliers/search?${params}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        const rows: SupplierRow[] = (data.suppliers || []).map(
+          (s: {
+            id: string;
+            name: string;
+            distance_km: number | null;
+            categories: string[];
+            capacity: number | null;
+            verified: boolean;
+            score: number;
+          }) => ({
+            id: s.id,
+            name: s.name,
+            category: (s.categories || []).join(', ') || 'UMKM',
+            distanceKm: s.distance_km ?? 0,
+            capacity: s.capacity ?? 0,
+            verified: s.verified,
+            completeness: Math.round((s.score ?? 0) * 100),
+          })
+        );
+        setSuppliers(rows.length > 0 ? rows : normalizeDemo());
+        setIsDemo(rows.length === 0);
+      })
+      .catch(() => {
+        setSuppliers(normalizeDemo());
+        setIsDemo(true);
+      });
+  }, [query, radius, verifiedOnly]);
 
   const filtered = useMemo(() => {
-    return DEMO_SUPPLIERS.filter((s) => {
+    return suppliers.filter((s) => {
       if (verifiedOnly && !s.verified) return false;
-      if (s.distanceKm > radius) return false;
+      if (s.distanceKm != null && s.distanceKm > radius) return false;
       if (query && !s.name.toLowerCase().includes(query.toLowerCase())) return false;
       return true;
     });
-  }, [query, radius, verifiedOnly]);
+  }, [suppliers, query, radius, verifiedOnly]);
 
   return (
     <motion.div
@@ -82,7 +146,8 @@ export function SupplierDirectory() {
       </div>
 
       <p className="text-sm text-neutral-500">
-        {filtered.length} supplier ditemukan · Mode demo
+        {filtered.length} supplier ditemukan
+        {isDemo ? ' · Mode demo' : ' · Data API'}
       </p>
 
       <div className="space-y-3">

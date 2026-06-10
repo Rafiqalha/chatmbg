@@ -32,7 +32,7 @@ export function ChatMBGLogo({ size = 36, showText = true, className, textClassNa
   return (
     <div className={cn('flex items-center gap-2.5', className)}>
       <div
-        className="relative shrink-0 overflow-hidden rounded-xl bg-primary-500/10 ring-1 ring-primary-500/20"
+        className="relative flex shrink-0 items-center justify-center overflow-hidden"
         style={{ width: size, height: size }}
       >
         {!failed && srcIndex < LOGO_CANDIDATES.length ? (
@@ -41,7 +41,7 @@ export function ChatMBGLogo({ size = 36, showText = true, className, textClassNa
             alt="ChatMBG"
             width={size}
             height={size}
-            className="object-contain p-1"
+            className="max-h-full max-w-full object-contain"
             onError={() => {
               if (srcIndex + 1 < LOGO_CANDIDATES.length) {
                 setSrcIndex((i) => i + 1);

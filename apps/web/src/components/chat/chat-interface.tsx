@@ -12,6 +12,10 @@ import {
   Leaf,
   BookOpen,
   AlertCircle,
+  ClipboardList,
+  Salad,
+  Search,
+  FileBarChart,
   type LucideIcon,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -19,6 +23,9 @@ import remarkGfm from 'remark-gfm';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 import { DEMO_CHAT_RESPONSE, DEMO_CITATIONS } from '@/lib/mock/demo-data';
+import { apiFetch } from '@/lib/api';
+import { ChatMBGLogo } from '@/components/brand/chatmbg-logo';
+import { getWebLLMEngine } from '@/lib/web-llm';
 
 interface Citation {
   regulation: string;
@@ -37,19 +44,19 @@ interface Message {
 }
 
 const QUICK_PROMPTS = [
-  { icon: '📋', text: 'Apa syarat menjadi supplier resmi MBG?', category: 'UMKM' },
+  { icon: ClipboardList, text: 'Apa syarat menjadi supplier resmi MBG?', category: 'UMKM' },
   {
-    icon: '🥗',
+    icon: Salad,
     text: 'Validasi menu: nasi, ayam, tempe, sayur bayam, pisang untuk siswa SD',
     category: 'Validator',
   },
   {
-    icon: '🔍',
+    icon: Search,
     text: 'Jelaskan kewajiban hyperlocal sourcing dalam SK 244/2025',
     category: 'Regulasi',
   },
   {
-    icon: '📊',
+    icon: FileBarChart,
     text: 'Dokumen apa yang dibutuhkan untuk persiapan audit BPKP?',
     category: 'Compliance',
   },
@@ -120,21 +127,53 @@ function CitationCard({ citations }: { citations: Citation[] }) {
 
 function TypingIndicator() {
   return (
-    <div className="flex items-center gap-1.5 px-4 py-3">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-500">
-        <Leaf className="h-4 w-4 text-white" />
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="group flex gap-3 px-4 py-2"
+    >
+      <div className="relative mt-1 flex h-8 w-8 shrink-0 items-center justify-center">
+        <motion.div
+          className="absolute inset-0 rounded-full bg-primary-400 blur-[4px] dark:bg-primary-600"
+          animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <div className="relative flex h-full w-full items-center justify-center rounded-full bg-primary-500 shadow-sm">
+          <Leaf className="h-4 w-4 text-white" />
+        </div>
       </div>
-      <div className="flex items-center gap-1 rounded-2xl border border-neutral-200 bg-white px-4 py-3 dark:border-neutral-700 dark:bg-neutral-800">
-        {[0, 1, 2].map((i) => (
-          <motion.div
-            key={i}
-            className="h-1.5 w-1.5 rounded-full bg-primary-400"
-            animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
-            transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
-          />
-        ))}
+
+      <div className="flex max-w-[85%] items-center sm:max-w-[80%]">
+        <div className="flex items-center gap-3.5 rounded-2xl rounded-tl-sm border border-primary-100 bg-gradient-to-r from-white to-primary-50/40 px-5 py-3 shadow-sm dark:border-primary-900/30 dark:from-neutral-800 dark:to-primary-900/10">
+          <div className="flex items-center gap-1.5">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                className="h-2 w-2 rounded-full bg-primary-500 dark:bg-primary-400"
+                animate={{
+                  y: [0, -5, 0],
+                  scale: [0.9, 1.1, 0.9],
+                  opacity: [0.4, 1, 0.4],
+                }}
+                transition={{
+                  duration: 0.9,
+                  repeat: Infinity,
+                  delay: i * 0.15,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+          </div>
+          <motion.span
+            className="text-xs font-semibold tracking-wide text-primary-600/80 dark:text-primary-400/80"
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            Memproses...
+          </motion.span>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -237,19 +276,7 @@ function EmptyState({ onPromptClick }: { onPromptClick: (text: string) => void }
         transition={{ duration: 0.4 }}
       >
         <div className="mb-6 flex items-center justify-center">
-          <div className="relative">
-            <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-primary-400 to-primary-600 shadow-lg shadow-primary-500/25">
-              <Leaf className="h-10 w-10 text-white" />
-            </div>
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
-              className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-accent-400 text-xs font-bold text-white"
-            >
-              AI
-            </motion.div>
-          </div>
+          <ChatMBGLogo size={80} showText={false} className="mx-auto justify-center" />
         </div>
 
         <h1 className="font-display mb-2 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
@@ -276,7 +303,7 @@ function EmptyState({ onPromptClick }: { onPromptClick: (text: string) => void }
                 'dark:hover:border-primary-700 dark:hover:bg-primary-900/20'
               )}
             >
-              <span className="text-xl">{p.icon}</span>
+              <p.icon className="h-6 w-6 shrink-0 text-primary-500" />
               <div>
                 <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-primary-500">
                   {p.category}
@@ -314,6 +341,7 @@ export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef(false);
@@ -355,74 +383,67 @@ export function ChatInterface() {
       setIsLoading(true);
       abortRef.current = false;
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
       try {
-        const res = await fetch(`${apiUrl}/api/v1/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: content }),
+        setDownloadProgress('Menginisialisasi AI Lokal...');
+        const engine = await getWebLLMEngine((progress) => {
+          setDownloadProgress(progress.text);
+        });
+        setDownloadProgress('');
+
+        const systemPrompt = `Kamu adalah MBGBrain, asisten AI khusus untuk program Makan Bergizi Gratis (MBG) Indonesia. 
+Jawab HANYA berdasarkan konteks regulasi MBG. Jika tidak tahu, katakan tidak tahu.
+Konteks Ringkas:
+- SK 244/2025: Mewajibkan hyperlocal sourcing (pengadaan dari wilayah terdekat).
+- Standar Gizi: Nasi, Lauk Hewani, Lauk Nabati, Sayur, Buah.
+- SPPG: Satuan Pelayanan Pemenuhan Gizi.
+Berikan jawaban ringkas dan jelas.`;
+
+        const chatMessages = messages.map(m => ({ role: m.role, content: m.content }));
+        
+        const chunks = await engine.chat.completions.create({
+          messages: [
+            { role: 'system', content: systemPrompt },
+            ...chatMessages,
+            { role: 'user', content: content }
+          ],
+          temperature: 0.2,
+          stream: true,
         });
 
-        if (!res.ok) throw new Error('API error');
-
-        const reader = res.body?.getReader();
-        const decoder = new TextDecoder();
-
-        if (reader) {
-          let accumulated = '';
-          let citations: Citation[] = [];
-
-          while (true) {
-            if (abortRef.current) break;
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split('\n').filter((l) => l.startsWith('data: '));
-
-            for (const line of lines) {
-              const data = line.replace('data: ', '');
-              if (data === '[DONE]') break;
-              try {
-                const parsed = JSON.parse(data);
-                if (parsed.delta) accumulated += parsed.delta;
-                if (parsed.citations) citations = parsed.citations;
-                setMessages((prev) =>
-                  prev.map((m) =>
-                    m.id === assistantMsg.id
-                      ? { ...m, content: accumulated, citations, status: 'streaming' }
-                      : m
-                  )
-                );
-              } catch {
-                /* skip malformed chunks */
-              }
-            }
-          }
-
-          setMessages((prev) =>
-            prev.map((m) => (m.id === assistantMsg.id ? { ...m, status: 'done' } : m))
-          );
-        }
-      } catch {
-        await streamDemoResponse(assistantMsg.id, (accumulated, citations, done) => {
+        let accumulated = '';
+        for await (const chunk of chunks) {
+          if (abortRef.current) break;
+          const delta = chunk.choices[0]?.delta?.content || "";
+          accumulated += delta;
+          
           setMessages((prev) =>
             prev.map((m) =>
               m.id === assistantMsg.id
-                ? {
-                    ...m,
-                    content: accumulated,
-                    citations,
-                    status: done ? 'done' : 'streaming',
-                    isDemo: true,
-                  }
+                ? { ...m, content: accumulated, status: 'streaming' }
                 : m
             )
           );
-        });
+        }
+
+        setMessages((prev) =>
+          prev.map((m) => (m.id === assistantMsg.id ? { ...m, status: 'done' } : m))
+        );
+      } catch (err) {
+        console.error("WebLLM Error:", err);
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMsg.id
+              ? {
+                  ...m,
+                  content: "Maaf, gagal memuat model lokal. Pastikan browser mendukung WebGPU.",
+                  status: 'error',
+                }
+              : m
+          )
+        );
       } finally {
         setIsLoading(false);
+        setDownloadProgress('');
       }
     },
     [input, isLoading]
@@ -454,7 +475,14 @@ export function ChatInterface() {
               <MessageBubble key={msg.id} message={msg} isLast={idx === messages.length - 1} />
             ))}
             {isLoading && messages[messages.length - 1]?.status !== 'streaming' && (
-              <TypingIndicator />
+              <div className="flex flex-col items-center justify-center p-4">
+                <TypingIndicator />
+                {downloadProgress && (
+                  <p className="mt-2 text-xs text-primary-600 dark:text-primary-400 max-w-sm text-center">
+                    {downloadProgress}
+                  </p>
+                )}
+              </div>
             )}
             <motion.div ref={bottomRef} layout />
           </div>

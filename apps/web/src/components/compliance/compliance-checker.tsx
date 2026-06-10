@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
+import { apiFetch } from '@/lib/api';
 
 interface ChecklistItem {
   id: string;
@@ -83,7 +84,26 @@ export function ComplianceChecker() {
     setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const generateReport = () => {
+  const generateReport = async () => {
+    const inputs: Record<string, unknown> = {
+      has_nib: checked.nib ?? false,
+      has_halal_cert: checked.halal ?? false,
+      halal_na: !checked.halal,
+      has_contract: checked.kontrak ?? false,
+      bpom_compliant: checked.halal ?? false,
+      supplier_same_district: checked.hyperlocal ?? false,
+      daily_capacity: checked.kapasitas ? 500 : 0,
+      required_servings: 200,
+    };
+    try {
+      const res = await apiFetch('/api/v1/compliance-check', {
+        method: 'POST',
+        body: JSON.stringify({ check_type: 'sk244_supplier', inputs }),
+      });
+      if (res.ok) await res.json();
+    } catch {
+      /* laporan lokal tetap ditampilkan */
+    }
     setShowReport(true);
     toast.success('Laporan compliance dibuat');
   };

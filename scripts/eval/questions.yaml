@@ -1,0 +1,103 @@
+# Soal evaluasi domain MBG (target: 50 soal — tambahkan seiring ingesti regulasi)
+version: "1.0"
+questions:
+  - q: "Apa kewajiban hyperlocal sourcing dalam SK 244/2025?"
+    keywords: ["hyperlocal", "lokal", "kecamatan", "kabupaten", "UMKM"]
+  - q: "Jelaskan mekanisme matching SPPG dan supplier menurut SK 244."
+    keywords: ["SPPG", "supplier", "matching", "244"]
+  - q: "Dokumen apa yang dibutuhkan UMKM untuk menjadi supplier MBG?"
+    keywords: ["NIB", "dokumen", "legalitas", "persyaratan"]
+  - q: "Apa standar keamanan pangan yang berlaku untuk dapur MBG?"
+    keywords: ["BPOM", "keamanan", "pangan", "higienis"]
+  - q: "Berapa kebutuhan energi minimum untuk porsi siswa SD?"
+    keywords: ["energi", "kkal", "SD", "standar", "gizi"]
+  - q: "Apa yang dimaksud dengan Satuan Pelayanan Pemenuhan Gizi?"
+    keywords: ["SPPG", "pelayanan", "gizi"]
+  - q: "Siapa yang mengeluarkan SK 244 tahun 2025?"
+    keywords: ["BGN", "Kepala", "244"]
+  - q: "Mengapa hyperlocal sourcing penting untuk program MBG?"
+    keywords: ["lokal", "ekonomi", "UMKM", "wilayah"]
+  - q: "Apa sanksi jika SPPG tidak memenuhi ketentuan pengadaan lokal?"
+    keywords: ["sanksi", "ketentuan", "pengadaan"]
+  - q: "Bagaimana SPPG memverifikasi kapasitas supplier UMKM?"
+    keywords: ["kapasitas", "porsi", "supplier", "verifikasi"]
+  - q: "Berapa gram protein minimum untuk porsi siswa SMP?"
+    keywords: ["protein", "SMP", "gram"]
+  - q: "Apa definisi UMKM katering dalam konteks program MBG?"
+    keywords: ["UMKM", "katering", "definisi"]
+  - q: "Berapa batas radius maksimal untuk hyperlocal sourcing jika tidak ada supplier di kecamatan yang sama?"
+    keywords: ["radius", "maksimal", "kabupaten", "kota"]
+  - q: "Apakah sertifikat halal wajib untuk semua supplier MBG?"
+    keywords: ["sertifikat", "halal", "wajib"]
+  - q: "Bagaimana prosedur pelaporan bulanan SPPG ke Dinas Kesehatan?"
+    keywords: ["prosedur", "pelaporan", "bulanan", "dinas"]
+  - q: "Berapa kalori standar porsi MBG untuk ibu hamil?"
+    keywords: ["kalori", "ibu", "hamil", "standar"]
+  - q: "Apakah koperasi berhak mendaftar sebagai supplier MBG?"
+    keywords: ["koperasi", "supplier", "mendaftar"]
+  - q: "Bagaimana peran BPKP dalam audit program MBG?"
+    keywords: ["BPKP", "audit", "peran"]
+  - q: "Sebutkan 3 dokumen legalitas usaha untuk mendaftar supplier."
+    keywords: ["dokumen", "legalitas", "usaha", "tiga"]
+  - q: "Apa syarat menu untuk anak balita usia 2-5 tahun?"
+    keywords: ["syarat", "menu", "balita", "tahun"]
+  - q: "Apakah dana program MBG dapat digunakan untuk operasional SPPG?"
+    keywords: ["dana", "operasional", "SPPG"]
+  - q: "Siapa penerima manfaat utama program MBG?"
+    keywords: ["penerima", "manfaat", "utama"]
+  - q: "Bagaimana jika suatu kabupaten tidak memiliki satupun supplier UMKM yang terverifikasi?"
+    keywords: ["kabupaten", "tidak", "memiliki", "supplier"]
+  - q: "Apa fungsi Tabel Komposisi Pangan Indonesia (TKPI) dalam program ini?"
+    keywords: ["TKPI", "fungsi", "tabel", "komposisi"]
+  - q: "Bagaimana standar kebersihan alat makan yang disyaratkan BPOM untuk MBG?"
+    keywords: ["standar", "kebersihan", "alat", "makan", "BPOM"]
+  - q: "Berapa kebutuhan lemak maksimum untuk porsi ibu menyusui?"
+    keywords: ["lemak", "maksimum", "ibu", "menyusui"]
+  - q: "Apakah diperbolehkan menggunakan bahan makanan impor dalam menu MBG?"
+    keywords: ["impor", "bahan", "makanan", "diperbolehkan"]
+  - q: "Bagaimana tata cara penyaluran dana ke supplier UMKM?"
+    keywords: ["tata", "cara", "penyaluran", "dana"]
+  - q: "Apa indikator kinerja utama (KPI) sebuah SPPG?"
+    keywords: ["indikator", "kinerja", "utama", "KPI", "SPPG"]
+  - q: "Apakah diperbolehkan SPPG membuat kontrak eksklusif dengan 1 UMKM saja?"
+    keywords: ["kontrak", "eksklusif", "satu", "UMKM"]
+  - q: "Apa yang harus dilakukan jika terjadi keracunan makanan pada siswa penerima MBG?"
+    keywords: ["keracunan", "makanan", "siswa", "lakukan"]
+  - q: "Berapa jam batas maksimal makanan jadi boleh disimpan sebelum didistribusikan?"
+    keywords: ["batas", "maksimal", "jam", "disimpan"]
+  - q: "Apakah relawan dapat berpartisipasi dalam dapur SPPG?"
+    keywords: ["relawan", "berpartisipasi", "dapur"]
+  - q: "Apa syarat transportasi logistik untuk mengantar MBG ke sekolah?"
+    keywords: ["syarat", "transportasi", "logistik", "mengantar"]
+  - q: "Bagaimana mekanisme evaluasi menu MBG oleh ahli gizi?"
+    keywords: ["mekanisme", "evaluasi", "menu", "ahli", "gizi"]
+  - q: "Apa tujuan dikeluarkannya Perpres No. 83 Tahun 2024?"
+    keywords: ["tujuan", "Perpres", "83", "2024"]
+  - q: "Siapa yang bertanggung jawab mengangkat koordinator SPPG?"
+    keywords: ["bertanggung", "jawab", "koordinator"]
+  - q: "Bagaimana standar minimum dapur sentral SPPG menurut BPOM?"
+    keywords: ["standar", "minimum", "dapur", "sentral"]
+  - q: "Apakah sekolah swasta berhak menerima MBG?"
+    keywords: ["sekolah", "swasta", "berhak", "menerima"]
+  - q: "Berapa gram karbohidrat minimum untuk siswa SMA?"
+    keywords: ["karbohidrat", "minimum", "SMA", "gram"]
+  - q: "Apakah susu wajib ada dalam menu MBG setiap hari?"
+    keywords: ["susu", "wajib", "menu", "setiap"]
+  - q: "Bagaimana peran pemerintah desa dalam mendukung SPPG?"
+    keywords: ["peran", "pemerintah", "desa", "mendukung"]
+  - q: "Apa parameter kepatuhan SK 244 untuk matching supplier?"
+    keywords: ["parameter", "kepatuhan", "SK", "244"]
+  - q: "Bagaimana prosedur pendaftaran untuk menjadi penerima manfaat ibu hamil?"
+    keywords: ["prosedur", "pendaftaran", "penerima", "manfaat", "hamil"]
+  - q: "Apakah supplier bahan pangan basah (sayur/daging) wajib memiliki cold storage?"
+    keywords: ["supplier", "bahan", "basah", "wajib", "cold", "storage"]
+  - q: "Berapa lama kontrak standar antara SPPG dan UMKM?"
+    keywords: ["lama", "kontrak", "standar", "UMKM"]
+  - q: "Apa yang dimaksud dengan platform intelijen MBGBrain dalam ekosistem ini?"
+    keywords: ["platform", "intelijen", "MBGBrain", "ekosistem"]
+  - q: "Bagaimana cara auditor memeriksa kepatuhan hyperlocal sourcing?"
+    keywords: ["cara", "auditor", "memeriksa", "kepatuhan"]
+  - q: "Apakah menu MBG dapat disesuaikan dengan kearifan lokal pangan setempat?"
+    keywords: ["menu", "disesuaikan", "kearifan", "lokal", "pangan"]
+  - q: "Siapa yang membiayai operasional SPPG?"
+    keywords: ["membiayai", "operasional", "SPPG"]
